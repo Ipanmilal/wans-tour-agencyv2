@@ -110,6 +110,7 @@ export const useCustomerStore = defineStore('tb_customer', ()=> {
       // menghapus data tabel customer end
 
     return {
+        customer,
         getCustomer,
         addCustomer,
         updateCustomer,

@@ -56,7 +56,7 @@ export const useTiketStore = defineStore('tb_tiket', ()=> {
     const updateTiket = async (id_tiket: number, id_wisata: number, jenis_tiket: string) =>{
         const { baseurl, apikey, secretkey} = useAppConfig()
 
-        const { data, error } = await useFetch <TiketData[]> (`rest/v1/tb_tiket?id=eq.${id_tiket}`, {
+        const { data, error } = await useFetch <TiketData[]> (`rest/v1/tb_tiket?id_tiket=eq.${id_tiket}`, {
             baseURL:baseurl,
             method: 'patch',
             headers: {
@@ -81,7 +81,7 @@ export const useTiketStore = defineStore('tb_tiket', ()=> {
     const deleteTiket = async (id_tiket: number) => {
         const { baseurl, apikey, secretkey } = useAppConfig()
     
-        const { data, error } = await useFetch<TiketData[]>(`rest/v1/tb_tiket?id=eq.${id_tiket}`, {
+        const { data, error } = await useFetch<TiketData[]>(`rest/v1/tb_tiket?id_tiket=eq.${id_tiket}`, {
           baseURL: baseurl,
           method: 'delete',
           headers: {
@@ -98,6 +98,7 @@ export const useTiketStore = defineStore('tb_tiket', ()=> {
       // menghapus data tabel tiket end
 
     return {
+        tiket,
         getTiket,
         addTiket,
         updateTiket,

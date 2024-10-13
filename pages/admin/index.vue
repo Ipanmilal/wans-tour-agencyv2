@@ -1,5 +1,5 @@
 <template>
-  <div>in proggres</div>
+  <!-- <div>in proggres</div> -->
 </template>
 <script>
 definePageMeta({

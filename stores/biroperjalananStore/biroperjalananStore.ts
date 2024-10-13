@@ -2,19 +2,19 @@ import { defineStore } from "pinia";
 interface BiroperjalananData {
     id_biroperjalanan : number;
     id_user : number;
-    nama : number
+    nama : string;
     alamat : string;
-    telp: string
+    telp: string;
 }
 
-export const useBiroperjalananStore = defineStore('tb_biroperjalanan', ()=> {
+export const useBiroperjalananStore = defineStore('tb_biropejalanan', ()=> {
     const biroperjalan = ref<BiroperjalananData[] | null>([])
     
     // menampilkan data tabel biroperjalanan
     const getBiroperjalanan = async () =>{
         const { baseurl, apikey, secretkey} = useAppConfig()
 
-        const { data, error } = await useFetch <BiroperjalananData[]> ('rest/v1/tb_biroperjalanan', {
+        const { data, error } = await useFetch <BiroperjalananData[]> ('rest/v1/tb_biropejalanan', {
             baseURL:baseurl,
             method: 'get',
             headers: {
@@ -34,7 +34,7 @@ export const useBiroperjalananStore = defineStore('tb_biroperjalanan', ()=> {
     const addBiroperjalanan = async (id_user: number, nama: string, alamat: string, telp: string) =>{
         const { baseurl, apikey, secretkey} = useAppConfig()
 
-        const { data, error } = await useFetch <BiroperjalananData[]> ('rest/v1/tb_biroperjalanan', {
+        const { data, error } = await useFetch <BiroperjalananData[]> ('rest/v1/tb_biropejalanan', {
             baseURL:baseurl,
             method: 'post',
             headers: {
@@ -60,7 +60,7 @@ export const useBiroperjalananStore = defineStore('tb_biroperjalanan', ()=> {
     const updateBiroperjalanan = async (id_biroperjalanan: number, id_user: number, nama: string, alamat: string, telp: string) =>{
         const { baseurl, apikey, secretkey} = useAppConfig()
 
-        const { data, error } = await useFetch <BiroperjalananData[]> (`rest/v1/tb_biroperjalanan?id=eq.${id_biroperjalanan}`, {
+        const { data, error } = await useFetch <BiroperjalananData[]> (`rest/v1/tb_biropejalanan?id_biroperjalanan=eq.${id_biroperjalanan}`, {
             baseURL:baseurl,
             method: 'patch',
             headers: {
@@ -87,7 +87,7 @@ export const useBiroperjalananStore = defineStore('tb_biroperjalanan', ()=> {
     const deleteBiroperjalanan = async (id_biroperjalanan: number) => {
         const { baseurl, apikey, secretkey } = useAppConfig()
     
-        const { data, error } = await useFetch<BiroperjalananData[]>(`rest/v1/tb_biroperjalanan?id=eq.${id_biroperjalanan}`, {
+        const { data, error } = await useFetch <BiroperjalananData[]> (`rest/v1/tb_biropejalanan?id_biroperjalanan=eq.${id_biroperjalanan}`, {
           baseURL: baseurl,
           method: 'delete',
           headers: {
@@ -104,6 +104,7 @@ export const useBiroperjalananStore = defineStore('tb_biroperjalanan', ()=> {
       // menghapus data tabel biroperjalanan end
 
     return {
+        biroperjalan,
         getBiroperjalanan,
         addBiroperjalanan,
         updateBiroperjalanan,

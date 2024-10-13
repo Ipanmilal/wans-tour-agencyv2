@@ -1,11 +1,11 @@
 import { defineStore } from "pinia";
-interface KategoriData {
+export interface KategoriData {
     id_kategori : number;
     nama_kategori: string;
     keterangan_kategori: string;
 }
 
-export const useKategoriStore = defineStore('tb_destinasi', ()=> {
+export const useKategoriStore = defineStore('tb_kategori', ()=> {
     const kategori = ref<KategoriData[] | null>([])
     
     // menampilkan data tabel kategori
@@ -56,7 +56,7 @@ export const useKategoriStore = defineStore('tb_destinasi', ()=> {
     const updateKategori = async (id_kategori: number, nama_kategori: string, keterangan_kategori: string) =>{
         const { baseurl, apikey, secretkey} = useAppConfig()
 
-        const { data, error } = await useFetch <KategoriData[]> (`rest/v1/tb_kategori?id=eq.${id_kategori}`, {
+        const { data, error } = await useFetch <KategoriData[]> (`rest/v1/tb_kategori?id_kategori=eq.${id_kategori}`, {
             baseURL:baseurl,
             method: 'patch',
             headers: {
@@ -81,7 +81,7 @@ export const useKategoriStore = defineStore('tb_destinasi', ()=> {
     const deleteKategori = async (id_kategori: number) => {
         const { baseurl, apikey, secretkey } = useAppConfig()
     
-        const { data, error } = await useFetch<KategoriData[]>(`rest/v1/tb_kategori?id=eq.${id_kategori}`, {
+        const { data, error } = await useFetch<KategoriData[]>(`rest/v1/tb_kategori?id_kategori=eq.${id_kategori}`, {
           baseURL: baseurl,
           method: 'delete',
           headers: {
@@ -98,6 +98,7 @@ export const useKategoriStore = defineStore('tb_destinasi', ()=> {
       // menghapus data tabel kategori end
 
     return {
+        kategori,
         getKategori,
         addKategori,
         updateKategori,

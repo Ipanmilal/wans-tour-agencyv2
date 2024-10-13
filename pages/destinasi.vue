@@ -1,10 +1,10 @@
-<template>
+<!-- <template>
   <div class="container-fluid nav-bar p-0">
     <h1>Comming soon.....</h1>
   </div>
-</template>
+</template> -->
 
-<!-- <script setup lang="ts">
+<script setup lang="ts">
 interface IDestinasi {
     id: number
     nama: string
@@ -137,4 +137,4 @@ const clikEdit = (id: number, nama: string, jumlah_seat: number, harga:string, d
     <h1 class="px-2 font-bold">></h1>
   </div>
 </div> 
-</template> -->
+</template>

@@ -21,4 +21,42 @@ export default defineNuxtConfig({
     secretkey: process.env.SUPABASE_SECRET_KEYS
   },
   modules: ["@pinia/nuxt"],
+  app: {
+    head: {
+      title: "WTA",
+      meta: [
+        // <meta name="viewport" content="width=device-width, initial-scale=1">
+        { charset: "utf-8" },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { hid: "description", name: "description", content: "" },
+        { name: "format-detection", content: "telephone=no" },
+      ],
+      script: [
+        { src: 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js' },
+        // {
+        //   src: 'https://kit.fontawesome.com/27ed9d2a8a.js',
+        //   crossorigin: 'anonymous',
+        //   defer: true
+        // }
+      ],
+      link: [
+        // { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css' },
+        {rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css'},
+        
+        {
+          rel: "stylesheet",
+          href: "https://fonts.googleapis.com/css2?family=Poppins&display=swap",
+        },
+        // {
+        //   rel: "stylesheet",
+        //   href: "https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css",
+        // },
+        {
+          rel: "stylesheet",
+          href: "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+        }
+      ],
+    }
+    
+  },
 })

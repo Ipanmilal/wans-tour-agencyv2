@@ -5,7 +5,7 @@ interface WisataData {
     id_user : number;
     nama_wisata : string;
     alamat_wisata : string;
-    fasilitas: string
+    fasilitas: string;
     gambar: string;
     id_biroperjalanan: number;
 }
@@ -65,7 +65,7 @@ export const useWisataStore = defineStore('tb_wisata', ()=> {
     const updateWisata = async (id_wisata: number, id_kategori: number, id_user: number, nama_wisata: string, alamat_wisata: string, fasilitas: string, id_biroperjalanan: number) =>{
         const { baseurl, apikey, secretkey} = useAppConfig()
 
-        const { data, error } = await useFetch <WisataData[]> (`rest/v1/tb_wisata?id=eq.${id_wisata}`, {
+        const { data, error } = await useFetch <WisataData[]> (`rest/v1/tb_wisata?id_wisata=eq.${id_wisata}`, {
             baseURL:baseurl,
             method: 'patch',
             headers: {
@@ -94,7 +94,7 @@ export const useWisataStore = defineStore('tb_wisata', ()=> {
     const deleteWisata = async (id_wisata: number) => {
         const { baseurl, apikey, secretkey } = useAppConfig()
     
-        const { data, error } = await useFetch<WisataData[]>(`rest/v1/tb_wisata?id=eq.${id_wisata}`, {
+        const { data, error } = await useFetch<WisataData[]>(`rest/v1/tb_wisata?id_wisata=eq.${id_wisata}`, {
           baseURL: baseurl,
           method: 'delete',
           headers: {
@@ -111,6 +111,7 @@ export const useWisataStore = defineStore('tb_wisata', ()=> {
       // menghapus data tabel wisata end
 
     return {
+        wisata,
         getWisata,
         addWisata,
         updateWisata,

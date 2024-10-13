@@ -62,7 +62,7 @@ export const useTransaksiStore = defineStore('tb_transaksi', ()=> {
     const updateTransaksi = async (id_transaksi: number, id_tiket: number, id_user: number, tgl_pesan: string, jumlah_bayar: string, id_biroperjalanan: number) =>{
         const { baseurl, apikey, secretkey} = useAppConfig()
 
-        const { data, error } = await useFetch <TransaksiData[]> (`rest/v1/tb_transaksi?id=eq.${id_transaksi}`, {
+        const { data, error } = await useFetch <TransaksiData[]> (`rest/v1/tb_transaksi?id_transaksi=eq.${id_transaksi}`, {
             baseURL:baseurl,
             method: 'patch',
             headers: {
@@ -90,7 +90,7 @@ export const useTransaksiStore = defineStore('tb_transaksi', ()=> {
     const deleteTransaksi = async (id_transaksi: number) => {
         const { baseurl, apikey, secretkey } = useAppConfig()
     
-        const { data, error } = await useFetch<TransaksiData[]>(`rest/v1/tb_transaksi?id=eq.${id_transaksi}`, {
+        const { data, error } = await useFetch<TransaksiData[]>(`rest/v1/tb_transaksi?id_transaksi=eq.${id_transaksi}`, {
           baseURL: baseurl,
           method: 'delete',
           headers: {
@@ -107,6 +107,7 @@ export const useTransaksiStore = defineStore('tb_transaksi', ()=> {
       // menghapus data tabel transaksi end
 
     return {
+        transaksi,
         getTransaksi,
         addTransaksi,
         updateTransaksi,
