@@ -1,12 +1,12 @@
 import { defineStore } from "pinia";
 interface CustomerData {
     id_user : number;
-    no_ktp : number;
+    no_ktp : string;
     nama: string;
     alamat : string;
     kota_asal : string;
     jenis_kelamin : string;
-    no_telepon: string
+    no_telepon: string;
 }
 
 export const useCustomerStore = defineStore('tb_customer', ()=> {
@@ -33,7 +33,7 @@ export const useCustomerStore = defineStore('tb_customer', ()=> {
     // menampilkan data tabel customer end
 
     // menambahkan data tabel customer
-    const addCustomer = async (no_ktp: number, nama: string, alamat: string, kota_asal: string, jenis_kelamin: string, no_telepon: string ) =>{
+    const addCustomer = async (no_ktp: string, nama: string, alamat: string, kota_asal: string, jenis_kelamin: string, no_telepon: string ) =>{
         const { baseurl, apikey, secretkey} = useAppConfig()
 
         const { data, error } = await useFetch <CustomerData[]> ('rest/v1/tb_customer', {
@@ -61,10 +61,10 @@ export const useCustomerStore = defineStore('tb_customer', ()=> {
     // menambahkan data tabel customer end
 
     // mengubah data tabel customer 
-    const updateCustomer = async (id_user: number, no_ktp: number, nama: string, alamat: number, kota_asal: string, jenis_kelamin: string, no_telepon: string) =>{
+    const updateCustomer = async (id_user: number, no_ktp: string, nama: string, alamat: string, kota_asal: string, jenis_kelamin: string, no_telepon: string) =>{
         const { baseurl, apikey, secretkey} = useAppConfig()
 
-        const { data, error } = await useFetch <CustomerData[]> (`rest/v1/tb_customer?id=eq.${id_user}`, {
+        const { data, error } = await useFetch <CustomerData[]> (`rest/v1/tb_customer?id_user=eq.${id_user}`, {
             baseURL:baseurl,
             method: 'patch',
             headers: {
@@ -93,7 +93,7 @@ export const useCustomerStore = defineStore('tb_customer', ()=> {
     const deleteCustomer = async (id_user: number) => {
         const { baseurl, apikey, secretkey } = useAppConfig()
     
-        const { data, error } = await useFetch<CustomerData[]>(`rest/v1/tb_customer?id=eq.${id_user}`, {
+        const { data, error } = await useFetch<CustomerData[]>(`rest/v1/tb_customer?id_user=eq.${id_user}`, {
           baseURL: baseurl,
           method: 'delete',
           headers: {

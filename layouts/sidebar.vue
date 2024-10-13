@@ -9,9 +9,10 @@
 <template>
   <div>
     <Sidebar>
-      <div>
-        <h1>Welcome to Nuxt.js with Bootstrap 5 Sidebar</h1>
-        <p>This is the main content area</p>
+      <Header />
+      <div class="mt-4">
+        <!-- <h1>Welcome to Nuxt.js with Bootstrap 5 Sidebar</h1>
+        <p>This is the main content area</p> -->
         <slot />
       </div>
     </Sidebar>
@@ -20,7 +21,8 @@
 
 <script setup>
 import Sidebar from '~/components/baseComponent/sidebar.vue'
-// import HeaderAdmin from '~/components/header/HeaderAdmin.vue'
+import Header from '~/components/baseComponent/header/headeradmin.vue'
+
 </script>
 
 <style scoped>

@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="">
       <div class="mb-3 d-flex justify-content-between">
-        <h3>Wisata</h3>
+        <h3>Wisata {{ customer }}</h3>
         <button
           type="button"
           class="btn btn-primary btn-sm"
@@ -170,7 +170,7 @@
           <div class="input-group mb-3">
             <span class="input-group-text col-3">Kategori</span>
             <select v-model="newIdKategori" id="kategori" class="form-select">
-              <option value="" hidden selected>Pilih</option>
+              <option value="0" hidden selected>Pilih</option>
               <option
                 v-for="kategori in kategori"
                 :key="kategori.id_kategori"
@@ -182,12 +182,17 @@
           </div>
           <div class="input-group mb-3">
             <span class="input-group-text col-3">Konsumen</span>
-            <input
-              type="text"
-              aria-label="user"
-              class="form-control"
-              v-model="newIdUser"
-            />
+            <select v-model="newIdUser" id="user" class="form-select">
+              <option value="0" hidden selected>Pilih</option>
+              <option
+                v-for="customer in customer"
+                :key="customer.id_user"
+                :value="customer.id_user"
+              >
+                {{ customer.nama }}
+              </option>
+            </select>
+            
           </div>
           <div class="input-group mb-3">
             <span class="input-group-text col-3">Nama Wisata</span>
@@ -218,12 +223,16 @@
           </div>
           <div class="input-group mb-3">
             <span class="input-group-text col-3">Biroperjalan</span>
-            <input
-              type="text"
-              aria-label="biroperjalanan"
-              class="form-control"
-              v-model="newIdBiroperjalananr"
-            />
+            <select v-model="newIdBiroperjalananr" id="biroperjalann" class="form-select">
+              <option value="0" hidden selected>Pilih</option>
+              <option
+                v-for="biroperjalan in biroperjalan"
+                :key="biroperjalan.id_biroperjalanan"
+                :value="biroperjalan.id_biroperjalanan"
+              >
+                {{ biroperjalan.nama }}
+              </option>
+            </select>
           </div>
         </div>
         
@@ -272,7 +281,7 @@
           <div class="input-group mb-3">
             <span class="input-group-text col-3">Kategori</span>
             <select v-model="newIdKategori" id="kategori" class="form-select">
-              <option value="" hidden selected>Pilih</option>
+              <option value="0" hidden selected>Pilih</option>
               <option
                 v-for="kategori in kategori"
                 :key="kategori.id_kategori"
@@ -284,12 +293,17 @@
           </div>
           <div class="input-group mb-3">
             <span class="input-group-text col-3">Konsumen</span>
-            <input
-              type="text"
-              aria-label="user"
-              class="form-control"
-              v-model="newIdUser"
-            />
+            <select v-model="newIdUser" id="user" class="form-select">
+              <option value="0" hidden selected>Pilih</option>
+              <option
+                v-for="customer in customer"
+                :key="customer.id_user"
+                :value="customer.id_user"
+              >
+                {{ customer.nama }}
+              </option>
+            </select>
+            
           </div>
           <div class="input-group mb-3">
             <span class="input-group-text col-3">Nama Wisata</span>
@@ -320,12 +334,16 @@
           </div>
           <div class="input-group mb-3">
             <span class="input-group-text col-3">Biroperjalan</span>
-            <input
-              type="text"
-              aria-label="biroperjalanan"
-              class="form-control"
-              v-model="newIdBiroperjalananr"
-            />
+            <select v-model="newIdBiroperjalananr" id="biroperjalann" class="form-select">
+              <option value="0" hidden selected>Pilih</option>
+              <option
+                v-for="biroperjalan in biroperjalan"
+                :key="biroperjalan.id_biroperjalanan"
+                :value="biroperjalan.id_biroperjalanan"
+              >
+                {{ biroperjalan.nama }}
+              </option>
+            </select>
           </div>
         </div>
         
@@ -357,6 +375,8 @@
 import { ref, computed } from "vue";
 import { useWisataStore } from "~/stores/wisataStore/wisataStore";
 import { useKategoriStore } from "~/stores/kategoriStore/kategoriStore";
+import { useCustomerStore } from "~/stores/customerStore/customersStore";
+import { useBiroperjalananStore } from "~/stores/biroperjalananStore/biroperjalananStore";
 
 interface WisataData {
   id_wisata: number;
@@ -383,8 +403,19 @@ const { wisata } = storeToRefs(wisataStore);
 const kategoriStore = useKategoriStore();
 const { getKategori } = kategoriStore;
 const { kategori } = storeToRefs(kategoriStore);
-
 // mengambil data kategori end
+
+// mengambil data customer 
+const customerStore = useCustomerStore();
+const { getCustomer } = customerStore;
+const { customer } = storeToRefs(customerStore);
+// mengambil data customer end
+
+// mengambil data biroperjalanan 
+const biroperjalananStore = useBiroperjalananStore();
+const { getBiroperjalanan } = biroperjalananStore;
+const { biroperjalan } = storeToRefs(biroperjalananStore);
+// mengambil data biroperjalanan end
 
 // komponen untuk menambahkan data kategori
 const newIdKategori = ref<number>(0);
