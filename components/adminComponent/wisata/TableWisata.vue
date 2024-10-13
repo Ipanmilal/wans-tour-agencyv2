@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="">
       <div class="mb-3 d-flex justify-content-between">
-        <h3>Wisata {{ customer }}</h3>
+        <h3>Wisata</h3>
         <button
           type="button"
           class="btn btn-primary btn-sm"
@@ -30,7 +30,7 @@
           <input
             type="text"
             class="form-control"
-            placeholder="Cari berdasarkan nama kategori..."
+            placeholder="Cari berdasarkan nama wisata..."
             v-model="searchQuery"
           />
         </div>
@@ -56,12 +56,42 @@
             </tr>
             <tr v-else v-for="(wisata, index) in currentItems" :key="index">
               <td>{{ index + 1 + (currentPage - 1) * itemsPerPage }}</td>
-              <td>{{ wisata.id_kategori }}</td>
-              <td>{{ wisata.id_user }}</td>
+              <td>
+                <select id="kategori" class="form-select" disabled>
+                  <option
+                    v-for="kategori in kategori"
+                    :key="kategori.id_kategori"
+                    :value="wisata.id_kategori"
+                  >
+                    {{ kategori.nama_kategori }}
+                  </option>
+                </select>
+              </td>
+              <td>
+                <select id="customer" class="form-select" disabled>
+              <option
+                v-for="customer in customer"
+                :key="customer.id_user"
+                :value="wisata.id_user"
+              >
+                {{ customer.nama }}
+              </option>
+                </select>
+              </td>
               <td>{{ wisata.nama_wisata }}</td>
               <td>{{ wisata.alamat_wisata }}</td>
               <td>{{ wisata.fasilitas }}</td>
-              <td>{{ wisata.id_biroperjalanan }}</td>
+              <td>
+                <select id="biroperjalanan" class="form-select" disabled>
+              <option
+                v-for="biroperjalan in biroperjalan"
+                :key="biroperjalan.id_biroperjalanan"
+                :value="wisata.id_biroperjalanan"
+              >
+                {{ biroperjalan.nama }}
+              </option>
+                </select>
+            </td>
               <td class="text-center">
                 <button
                   class="btn btn-sm btn-outline-info"
@@ -76,7 +106,7 @@
                       wisata.alamat_wisata,
                       wisata.fasilitas,
                       wisata.gambar,
-                      wisata.id_biroperjalanan,
+                      wisata.id_biroperjalanan
                     )
                   "
                   data-bs-target="#modaledithwisata"
@@ -192,7 +222,6 @@
                 {{ customer.nama }}
               </option>
             </select>
-            
           </div>
           <div class="input-group mb-3">
             <span class="input-group-text col-3">Nama Wisata</span>
@@ -223,7 +252,11 @@
           </div>
           <div class="input-group mb-3">
             <span class="input-group-text col-3">Biroperjalan</span>
-            <select v-model="newIdBiroperjalananr" id="biroperjalann" class="form-select">
+            <select
+              v-model="newIdBiroperjalananr"
+              id="biroperjalann"
+              class="form-select"
+            >
               <option value="0" hidden selected>Pilih</option>
               <option
                 v-for="biroperjalan in biroperjalan"
@@ -235,7 +268,7 @@
             </select>
           </div>
         </div>
-        
+
         <div class="modal-footer">
           <button
             type="button"
@@ -269,7 +302,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modaltambahwisataLabel">Tambah Wisata</h5>
+          <h5 class="modal-title" id="modaltambahwisataLabel">Edit Wisata</h5>
           <button
             type="button"
             class="btn-close"
@@ -303,7 +336,6 @@
                 {{ customer.nama }}
               </option>
             </select>
-            
           </div>
           <div class="input-group mb-3">
             <span class="input-group-text col-3">Nama Wisata</span>
@@ -334,7 +366,11 @@
           </div>
           <div class="input-group mb-3">
             <span class="input-group-text col-3">Biroperjalan</span>
-            <select v-model="newIdBiroperjalananr" id="biroperjalann" class="form-select">
+            <select
+              v-model="newIdBiroperjalananr"
+              id="biroperjalann"
+              class="form-select"
+            >
               <option value="0" hidden selected>Pilih</option>
               <option
                 v-for="biroperjalan in biroperjalan"
@@ -346,7 +382,7 @@
             </select>
           </div>
         </div>
-        
+
         <div class="modal-footer">
           <button
             type="button"
@@ -378,17 +414,6 @@ import { useKategoriStore } from "~/stores/kategoriStore/kategoriStore";
 import { useCustomerStore } from "~/stores/customerStore/customersStore";
 import { useBiroperjalananStore } from "~/stores/biroperjalananStore/biroperjalananStore";
 
-interface WisataData {
-  id_wisata: number;
-  id_kategori: number;
-  id_user: number;
-  nama_wisata: string;
-  alamat_wisata: string;
-  fasilitas: string;
-  gambar: string;
-  id_biroperjalanan: number;
-}
-
 // Mengambil data dari store
 const wisataStore = useWisataStore();
 const {
@@ -405,13 +430,13 @@ const { getKategori } = kategoriStore;
 const { kategori } = storeToRefs(kategoriStore);
 // mengambil data kategori end
 
-// mengambil data customer 
+// mengambil data customer
 const customerStore = useCustomerStore();
 const { getCustomer } = customerStore;
 const { customer } = storeToRefs(customerStore);
 // mengambil data customer end
 
-// mengambil data biroperjalanan 
+// mengambil data biroperjalanan
 const biroperjalananStore = useBiroperjalananStore();
 const { getBiroperjalanan } = biroperjalananStore;
 const { biroperjalan } = storeToRefs(biroperjalananStore);
@@ -454,6 +479,9 @@ const currentItems = computed(() => {
 });
 // Mengambil data kategori saat komponen dimuat
 getWisata();
+getKategori();
+getCustomer();
+getBiroperjalanan();
 
 // fungsi untuk menambahkan data wisata
 const addWisata = async () => {

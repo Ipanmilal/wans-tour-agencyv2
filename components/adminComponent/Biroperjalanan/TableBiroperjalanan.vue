@@ -54,7 +54,17 @@
             </tr>
             <tr v-else v-for="(item, index) in currentItems" :key="index">
               <td>{{ index + 1 + (currentPage - 1) * itemsPerPage }}</td>
-              <td>{{ item.id_user }}</td>
+              <td>
+                <select id="user" class="form-select" disabled>
+                  <option
+                    v-for="customer in customer"
+                    :key="item.id_user"
+                    :value="item.id_user"
+                  >
+                    {{ customer.nama }}
+                  </option>
+                </select>
+              </td>
               <td>{{ item.nama }}</td>
               <td>{{ item.alamat }}</td>
               <td>{{ item.telp }}</td>
@@ -151,7 +161,9 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Tambah Biroperjalanan</h5>
+          <h5 class="modal-title" id="exampleModalLabel">
+            Tambah Biroperjalanan
+          </h5>
           <button
             type="button"
             class="btn-close"
@@ -162,12 +174,16 @@
         <div class="modal-body">
           <div class="input-group mb-3">
             <span class="input-group-text col-3">Konsumen</span>
-            <input
-              type="text"
-              aria-label="konsumen"
-              class="form-control"
-              v-model="newIdUser"
-            />
+            <select v-model="newIdUser" id="user" class="form-select">
+              <option value="0" hidden selected>Pilih</option>
+              <option
+                v-for="customer in customer"
+                :key="customer.id_user"
+                :value="customer.id_user"
+              >
+                {{ customer.nama }}
+              </option>
+            </select>
           </div>
           <div class="input-group mb-3">
             <span class="input-group-text col-3">Nama</span>
@@ -230,7 +246,9 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Tambah Biroperjalanan</h5>
+          <h5 class="modal-title" id="exampleModalLabel">
+            Tambah Biroperjalanan
+          </h5>
           <button
             type="button"
             class="btn-close"
@@ -241,12 +259,16 @@
         <div class="modal-body">
           <div class="input-group mb-3">
             <span class="input-group-text col-3">Konsumen</span>
-            <input
-              type="text"
-              aria-label="konsumen"
-              class="form-control"
-              v-model="newIdUser"
-            />
+            <select v-model="newIdUser" id="user" class="form-select">
+              <option value="0" hidden selected>Pilih</option>
+              <option
+                v-for="customer in customer"
+                :key="customer.id_user"
+                :value="customer.id_user"
+              >
+                {{ customer.nama }}
+              </option>
+            </select>
           </div>
           <div class="input-group mb-3">
             <span class="input-group-text col-3">Nama</span>
@@ -303,6 +325,7 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { useBiroperjalananStore } from "~/stores/biroperjalananStore/biroperjalananStore";
+import { useCustomerStore } from "~/stores/customerStore/customersStore";
 
 // Mengambil data dari store
 const biroperjalananStore = useBiroperjalananStore();
@@ -313,6 +336,12 @@ const {
   deleteBiroperjalanan: hapus,
 } = biroperjalananStore;
 const { biroperjalan } = storeToRefs(biroperjalananStore);
+
+// mengambil data customer
+const customerStore = useCustomerStore();
+const { getCustomer } = customerStore;
+const { customer } = storeToRefs(customerStore);
+// mengambil data customer end
 
 // komponen untuk menambahkan data biroperjalanan
 const newIdUser = ref<number>(0);
@@ -349,12 +378,13 @@ const currentItems = computed(() => {
 });
 // Mengambil data biroperjalanan saat komponen dimuat
 getBiroperjalanan();
+getCustomer();
 
 // fungsi untuk menambahkan data biroperjalanan
 const addBiroperjalanan = async () => {
   if (newNama.value.trim() !== "") {
     // todos.value.push({title: newTodo.value, status: false})
-    await nama(newIdUser.value, newNama.value, newAlamat.value, newTelp.value, );
+    await nama(newIdUser.value, newNama.value, newAlamat.value, newTelp.value);
     newIdUser.value = 0;
     newNama.value = "";
     newAlamat.value = "";
@@ -366,22 +396,28 @@ const addBiroperjalanan = async () => {
 
 // fungsi untuk mengubah data biroperjlanan berdasarkan id
 const updateBiroperjalanan = async () => {
-  await edit(editId.value, newIdUser.value, newNama.value, newAlamat.value, newTelp.value);
+  await edit(
+    editId.value,
+    newIdUser.value,
+    newNama.value,
+    newAlamat.value,
+    newTelp.value
+  );
 
   await getBiroperjalanan();
   newIdUser.value = 0;
-    newNama.value = "";
-    newAlamat.value = "";
-    newTelp.value = "";
+  newNama.value = "";
+  newAlamat.value = "";
+  newTelp.value = "";
   editId.value = 0;
 };
 
 const clikEdit = (
-    id_biroperjalanan : number,
-    id_user : number,
-    nama : string,
-    alamat : string,
-    telp: string,
+  id_biroperjalanan: number,
+  id_user: number,
+  nama: string,
+  alamat: string,
+  telp: string
 ) => {
   newIdUser.value = id_user;
   newNama.value = nama;
@@ -395,7 +431,9 @@ const clikEdit = (
 const deleteBiroperjalanan = async (id_biroperjalanan: number) => {
   // todos.value.splice(index, 1)
   await useSupabaseClient()
-    .from("tb_biropejalanan").delete().eq("id_biroperjalanan", id_biroperjalanan);
+    .from("tb_biropejalanan")
+    .delete()
+    .eq("id_biroperjalanan", id_biroperjalanan);
   await getBiroperjalanan();
 };
 

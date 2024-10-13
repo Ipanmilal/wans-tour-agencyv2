@@ -52,7 +52,17 @@
             </tr>
             <tr v-else v-for="(item, index) in currentItems" :key="index">
               <td>{{ index + 1 + (currentPage - 1) * itemsPerPage }}</td>
-              <td>{{ item.id_wisata }}</td>
+              <td>
+                <select id="idwisata" class="form-select" disabled>
+                  <option
+                    v-for="wisata in wisata"
+                    :key="item.id_wisata"
+                    :value="item.id_wisata"
+                  >
+                    {{ wisata.nama_wisata }}
+                  </option>
+                </select>
+              </td>
               <td>{{ item.jenis_tiket }}</td>
               <td class="text-center">
                 <button
@@ -153,7 +163,7 @@
           <div class="input-group mb-3">
             <span class="input-group-text col-3">Wisata</span>
             <select v-model="newIdWisata" id="idwisata" class="form-select">
-              <option value="" hidden selected>Pilih</option>
+              <option value="0" hidden selected>Pilih</option>
               <option
                 v-for="wisata in wisata"
                 :key="wisata.id_wisata"
@@ -218,7 +228,7 @@
           <div class="input-group mb-3">
             <span class="input-group-text col-3">Tiket</span>
             <select v-model="newIdWisata" id="idwisata" class="form-select">
-              <option value="" hidden selected>Pilih</option>
+              <option value="0" hidden selected>Pilih</option>
               <option
                 v-for="wisata in wisata"
                 :key="wisata.id_wisata"
@@ -316,6 +326,7 @@ const currentItems = computed(() => {
 });
 // Mengambil data kategori saat komponen dimuat
 getTiket();
+getWisata();
 
 // fungsi untuk menambahkan data Tiket
 const addTiket = async () => {
